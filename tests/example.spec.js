@@ -12,7 +12,16 @@ test('basic test - page navigation', async ({ page }) => {
 
 test('basic test - page interaction', async ({ page }) => {
   // Navigate to a simple HTML page with a button
-  await page.goto('data:text/html,<button id="btn">Click me</button><div id="result"></div><script>document.getElementById("btn").onclick = () => document.getElementById("result").innerText = "Clicked!";</script>');
+  const html = `
+    <button id="btn">Click me</button>
+    <div id="result"></div>
+    <script>
+      document.getElementById("btn").onclick = () => {
+        document.getElementById("result").innerText = "Clicked!";
+      };
+    </script>
+  `;
+  await page.goto(`data:text/html,${html}`);
 
   // Click the button
   await page.click('#btn');
@@ -23,7 +32,16 @@ test('basic test - page interaction', async ({ page }) => {
 
 test('basic test - form input', async ({ page }) => {
   // Navigate to a page with a form
-  await page.goto('data:text/html,<input id="name" type="text" /><p id="output"></p><script>document.getElementById("name").oninput = (e) => document.getElementById("output").innerText = "Hello, " + e.target.value;</script>');
+  const html = `
+    <input id="name" type="text" />
+    <p id="output"></p>
+    <script>
+      document.getElementById("name").oninput = (e) => {
+        document.getElementById("output").innerText = "Hello, " + e.target.value;
+      };
+    </script>
+  `;
+  await page.goto(`data:text/html,${html}`);
 
   // Fill the input
   await page.fill('#name', 'World');
